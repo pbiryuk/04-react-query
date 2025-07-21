@@ -3,9 +3,8 @@ import { useQuery, keepPreviousData } from '@tanstack/react-query';
 import toast, { Toaster } from 'react-hot-toast';
 
 import { fetchMovies } from '../../services/movieService';
-import type { MovieResponse } from '../../types/movie';
 import { type Movie } from '../../types/movie';
-
+import { type MovieResponse } from '../../services/movieService';
 import SearchBar from '../SearchBar/SearchBar';
 import MovieGrid from '../MovieGrid/MovieGrid';
 import Loader from '../Loader/Loader';
@@ -13,6 +12,8 @@ import ErrorMessage from '../ErrorMessage/ErrorMessage';
 import MovieModal from '../MovieModal/MovieModal';
 import ReactPaginate from 'react-paginate';
 import styles from './App.module.css';
+
+
 
 export default function App() {
   const [page, setPage] = useState(1);
@@ -81,15 +82,15 @@ export default function App() {
             />
           )}
 
-          {/* Loader only if fetching and there's no previous data */}
-          {isFetching && movies.length === 0 && <Loader />}
-
           <MovieGrid movies={movies} onSelect={setSelectedMovie} />
         </>
       )}
 
       {selectedMovie && (
-        <MovieModal movie={selectedMovie} onClose={() => setSelectedMovie(null)} />
+        <MovieModal
+          movie={selectedMovie}
+          onClose={() => setSelectedMovie(null)}
+        />
       )}
     </>
   );

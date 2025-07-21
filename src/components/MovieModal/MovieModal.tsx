@@ -8,8 +8,6 @@ interface MovieModalProps {
   onClose: () => void;
 }
 
-const modalRoot = document.querySelector('#modal-root') as HTMLElement;
-
 export default function MovieModal({ movie, onClose }: MovieModalProps) {
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
@@ -33,10 +31,19 @@ export default function MovieModal({ movie, onClose }: MovieModalProps) {
     }
   };
 
-  return createPortal(
-    <div className={styles.backdrop} role="dialog" aria-modal="true" onClick={handleBackdropClick}>
+  const modalContent = (
+    <div
+      className={styles.backdrop}
+      role="dialog"
+      aria-modal="true"
+      onClick={handleBackdropClick}
+    >
       <div className={styles.modal}>
-        <button className={styles.closeButton} onClick={onClose} aria-label="Close modal">
+        <button
+          className={styles.closeButton}
+          onClick={onClose}
+          aria-label="Close modal"
+        >
           &times;
         </button>
         <img
@@ -55,7 +62,8 @@ export default function MovieModal({ movie, onClose }: MovieModalProps) {
           </p>
         </div>
       </div>
-    </div>,
-    modalRoot
+    </div>
   );
+
+  return createPortal(modalContent, document.body);
 }
